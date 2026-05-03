@@ -230,7 +230,7 @@ const Variants = () => {
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-12">
         <div className="text-center">
           <p className="text-muted tracking-tight">
-            Orders with 5+ qualify for our <span className="text-[#8e9299] font-medium">Team Tier</span> discount rates.
+            Orders with 5+ qualify for our <span className="text-[#5C6068] font-medium">Team Tier</span> discount rates.
           </p>
         </div>
 
