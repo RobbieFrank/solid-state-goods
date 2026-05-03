@@ -18,10 +18,35 @@
   h1, h2, h3, h4 {
     @apply font-sans font-bold tracking-tight;
   }
+
+  .type-display {
+    @apply font-sans font-bold text-[56px] md:text-[72px] tracking-tight leading-[1.05];
+  }
+  .type-h1 {
+    @apply font-sans font-bold text-[36px] md:text-[48px] tracking-tight leading-[1.1];
+  }
+  .type-h2 {
+    @apply font-sans font-bold text-[24px] md:text-[32px] tracking-tight leading-[1.15];
+  }
+  .type-h3 {
+    @apply font-sans font-semibold text-[18px] md:text-[20px] tracking-tight leading-[1.3];
+  }
+  .type-body-lg {
+    @apply font-sans font-normal text-[18px] leading-[1.6];
+  }
+  .type-body {
+    @apply font-sans font-normal text-[16px] leading-[1.6];
+  }
+  .type-small {
+    @apply font-sans font-normal text-[14px] leading-[1.5];
+  }
+  .type-micro {
+    @apply font-mono font-medium text-[11px] uppercase tracking-[0.2em];
+  }
 }
 
 .technical-label {
-  @apply font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-2 block;
+  @apply font-mono font-medium text-[11px] uppercase tracking-[0.2em] text-muted mb-2 block;
 }
 
 .glass-pill {

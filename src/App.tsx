@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ArrowRight, 
-  Mail, 
-  MapPin, 
-  Phone, 
-  ChevronDown, 
-  Menu, 
+import {
+  ArrowRight,
+  Mail,
+  MapPin,
+  Phone,
+  ChevronDown,
+  Menu,
   X,
   Layers,
   Activity,
@@ -29,7 +29,7 @@ const Navbar = () => {
           <a href="#products" className="text-sm font-medium hover:text-muted transition-colors">Products</a>
         </div>
 
-        <button 
+        <button
           className="md:hidden p-2"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -39,7 +39,7 @@ const Navbar = () => {
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -58,40 +58,40 @@ const Hero = () => {
   return (
     <section className="relative min-h-[70vh] flex items-center justify-center pt-28 pb-14 overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img 
-          src="/hero.png" 
-          alt="Machined aluminum surface" 
+        <img
+          src="/hero.png"
+          alt="Machined aluminum surface"
           className="w-full h-full object-cover grayscale opacity-15 contrast-125"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-paper via-paper/40 to-paper/20" />
       </div>
 
       <div className="relative z-10 max-w-4xl px-6 text-center">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-5xl md:text-8xl mb-8 leading-[0.9] tracking-tighter"
+          className="type-display mb-8"
         >
           Precision products for serious humans.
         </motion.h1>
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg md:text-xl text-muted max-w-2xl mx-auto mb-12 font-medium leading-relaxed"
+          className="type-body-lg text-muted max-w-2xl mx-auto mb-12"
         >
-          Welcome to Solid State Goods. We over-engineer everyday products to last a lifetime. Buy it once and use it forever. We guarantee that you’ll never need another one, unless you want two or three, or…
+          Welcome to Solid State Goods. We over-engineer everyday products to last a lifetime. Buy it once and use it forever. We guarantee that you'll never need another one, unless you want two or three, or…
         </motion.p>
-        
-        <motion.div 
+
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <a 
-            href="#batch" 
+          <a
+            href="#batch"
             className="w-full sm:w-auto bg-ink text-paper px-8 py-4 rounded-lg font-bold hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-2 tracking-widest text-sm"
           >
             Preorder The Knuckle <ArrowRight size={18} />
@@ -111,42 +111,42 @@ interface VariantCardProps {
   badge?: string;
 }
 
-const VariantCard: React.FC<VariantCardProps> = ({ 
-  label, 
-  title, 
-  desc, 
-  price, 
-  image, 
-  badge 
+const VariantCard: React.FC<VariantCardProps> = ({
+  label,
+  title,
+  desc,
+  price,
+  image,
+  badge
 }) => (
-  <motion.div 
+  <motion.div
     whileHover={{ y: -8 }}
     className="group bg-white rounded-2xl overflow-hidden border border-ink/5 shadow-sm hover:shadow-xl transition-all h-full flex flex-col"
   >
     <div className="aspect-square relative overflow-hidden bg-paper/50">
-      <img 
-        src={image} 
-        alt={title} 
+      <img
+        src={image}
+        alt={title}
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         referrerPolicy="no-referrer"
       />
       {badge && (
-        <span className="absolute top-4 right-4 bg-ink text-paper text-[10px] uppercase font-mono tracking-widest px-3 py-1 rounded-full">
+        <span className="absolute top-4 right-4 bg-ink text-paper type-micro px-3 py-1 rounded-full">
           {badge}
         </span>
       )}
     </div>
     <div className="p-8 flex-grow flex flex-col">
       <span className="technical-label">{label}</span>
-      <h3 className="text-2xl mb-3">{title}</h3>
-      <p className="text-sm text-muted mb-6 leading-relaxed flex-grow">{desc}</p>
+      <h3 className="type-h3 mb-3">{title}</h3>
+      <p className="type-body text-muted mb-6 flex-grow">{desc}</p>
       <div className="pt-6 border-t border-ink/5 flex items-end justify-between">
         <div className="flex flex-col">
           <span className="technical-label !mb-0 opacity-50">Retail</span>
           <span className="text-2xl font-mono tracking-tighter">{price}</span>
         </div>
-        <a 
-          href="#batch" 
+        <a
+          href="#batch"
           className="inline-flex items-center gap-0 group-hover:gap-2 p-3 group-hover:px-4 bg-ink/5 rounded-lg hover:bg-ink hover:text-paper transition-all duration-300 group-hover:bg-ink group-hover:text-paper"
         >
           <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-all duration-300 text-xs font-bold tracking-tight">
@@ -194,7 +194,7 @@ const Variants = () => {
   ];
 
   const specs = [
-    { label: 'DIMENSIONS', content: '• Width: 3”\n• Length: 3.5”\n• Height: .75”' },
+    { label: 'DIMENSIONS', content: '• Width: 3"\n• Length: 3.5"\n• Height: .75"' },
     { label: 'CAPACITY', content: 'Designed for dual-cue storage, ensuring a precise fit for all standard pool and break cues.' },
     { label: 'CHASSIS', content: 'CNC-machined from a single, solid block of 6061-T6 Billet Aluminum.' },
     { label: 'STABILITY', content: 'Features a high-friction, non-marring grip pad that is safe for use on any surface.' },
@@ -207,16 +207,16 @@ const Variants = () => {
   return (
     <section id="products" className="py-32 px-6 bg-paper">
       <div className="max-w-7xl mx-auto text-center mb-24">
-        <h2 className="text-4xl md:text-6xl tracking-tight mb-6">The Knuckle</h2>
-        <p className="max-w-2xl mx-auto text-muted">
-          Most cue holders are cheap, generic, and built to fail. We built The Knuckle because we wanted something better. It’s a solid, precision-machined block of aluminum designed to stay exactly where you put it. It’s the last cue holder you’ll ever need to buy.
+        <h2 className="type-h1 mb-6">The Knuckle</h2>
+        <p className="type-body max-w-2xl mx-auto text-muted">
+          Most cue holders are cheap, generic, and built to fail. We built The Knuckle because we wanted something better. It's a solid, precision-machined block of aluminum designed to stay exactly where you put it. It's the last cue holder you'll ever need to buy.
         </p>
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
         {variants.map((v, i) => (
-          <VariantCard 
-            key={i} 
+          <VariantCard
+            key={i}
             label={v.label}
             title={v.title}
             desc={v.desc}
@@ -229,19 +229,19 @@ const Variants = () => {
 
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-12">
         <div className="text-center">
-          <p className="text-muted tracking-tight">
+          <p className="type-small text-muted">
             Orders with 5+ qualify for our <span className="text-[#5C6068] font-medium">Team Tier</span> discount rates.
           </p>
         </div>
 
         <div className="w-full">
-          <button 
+          <button
             onClick={() => setIsSpecsOpen(!isSpecsOpen)}
             className="flex items-center gap-4 group mx-auto mb-8"
           >
             <div className="w-20 h-[1px] bg-ink/10 group-hover:w-28 transition-all duration-500" />
             <div className="flex items-center gap-3 px-6 py-3 bg-white border border-ink/10 rounded-full shadow-sm hover:shadow-md hover:border-ink/20 transition-all">
-              <span className="font-sans text-[14px] font-normal tracking-[0.05em] text-ink/80">Product Details</span>
+              <span className="type-small text-ink/80">Product Details</span>
               <motion.div
                 animate={{ rotate: isSpecsOpen ? 180 : 0 }}
                 transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
@@ -265,10 +265,10 @@ const Variants = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-l border-t border-ink/10 bg-white">
                     {specs.map((item, index) => (
                       <div key={index} className="p-10 border-r border-b border-ink/10 flex flex-col min-h-[220px]">
-                        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-ink/30 block mb-6">
+                        <span className="type-micro text-ink/30 block mb-6">
                           {item.label}
                         </span>
-                        <p className="text-[14px] font-medium leading-relaxed text-ink/70 whitespace-pre-line">
+                        <p className="type-small text-ink/70 whitespace-pre-line">
                           {item.content}
                         </p>
                       </div>
@@ -304,8 +304,8 @@ const Philosophy = () => (
               <span className="absolute bottom-3 right-3 w-px h-4 bg-paper/30" />
 
               <div className="w-full h-full flex items-center justify-center">
-                <img 
-                  src="/logo.png" 
+                <img
+                  src="/logo.png"
                   alt="Solid State Goods"
                   className="w-full h-full object-contain"
                 />
@@ -313,30 +313,30 @@ const Philosophy = () => (
             </div>
 
             {/* Inscribed plate beneath the logo */}
-            <div className="mt-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-ink/40">
+            <div className="mt-4 flex items-center justify-between type-micro text-ink/40">
               <span>Est. MMXXVI</span>
               <span className="hidden sm:inline">Solid · State · Goods</span>
               <span>Made in USA</span>
             </div>
           </div>
         </div>
-        
+
         {/* Copy block */}
         <div className="lg:col-span-7 lg:pl-8">
           <div className="inline-flex items-center mb-8">
-            <span className="technical-label !mb-0 !text-[12px]">About Solid State Goods</span>
+            <span className="technical-label !mb-0">About Solid State Goods</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8 text-ink leading-[1.1]">
+          <h2 className="type-h2 mb-8 text-ink">
             Our objective is total structural permanence.
           </h2>
-          <div className="space-y-6 text-muted leading-relaxed font-medium max-w-xl">
-            <p className="text-xl">
+          <div className="space-y-6 text-muted max-w-xl">
+            <p className="type-body-lg">
               We reject the modern cycle of obsolescence, favoring materials that gain character through use while maintaining their core functional integrity for generations.
             </p>
-            <p>
+            <p className="type-body">
               Our journey began in a dusty workshop where a visionary designer and a cynical master machinist shared a single goal: to build products that never need to be replaced.
             </p>
-            <p>
+            <p className="type-body">
               Every product we produce is the result of that initial friction. We don't just design objects; we document the battle between aesthetic form and physical reality, ensuring that the final result is indestructible.
             </p>
           </div>
@@ -351,36 +351,36 @@ const BatchSection = () => {
     <section id="batch" className="py-32 px-6 bg-paper border-t border-ink/5">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-ink">Ready for yours? Join the current batch.</h2>
-        <p className="text-muted text-lg max-w-lg mx-auto">
-          We build in small batches. Register your interest below, and we’ll reach out to confirm the details.
-        </p>
+          <h2 className="type-h1 mb-4 text-ink">Ready for yours? Join the current batch.</h2>
+          <p className="type-body-lg text-muted max-w-lg mx-auto">
+            We build in small batches. Register your interest below, and we'll reach out to confirm the details.
+          </p>
         </div>
 
         <div className="bg-white p-8 md:p-12 rounded-2xl border border-ink/10 shadow-[0_0_50px_-12px_rgba(0,0,0,0.05)] relative overflow-hidden">
           {/* Form Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div className="space-y-3">
-              <label className="text-[12px] font-normal text-ink/40 font-sans">Full name *</label>
-              <input 
-                type="text" 
-                placeholder="Your name" 
-                className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm" 
+              <label className="type-small text-ink/40">Full name *</label>
+              <input
+                type="text"
+                placeholder="Your name"
+                className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
               />
             </div>
             <div className="space-y-3">
-              <label className="text-[12px] font-normal text-ink/40 font-sans">Email address *</label>
-              <input 
-                type="email" 
-                placeholder="you@domain.com" 
-                className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm" 
+              <label className="type-small text-ink/40">Email address *</label>
+              <input
+                type="email"
+                placeholder="you@domain.com"
+                className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div className="space-y-3 relative">
-              <label className="text-[12px] font-normal text-ink/40 font-sans">Variant interest</label>
+              <label className="type-small text-ink/40">Variant interest</label>
               <div className="relative">
                 <select className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors appearance-none pr-10 text-sm cursor-pointer">
                   <option>Silver Standard</option>
@@ -392,20 +392,20 @@ const BatchSection = () => {
               </div>
             </div>
             <div className="space-y-3">
-              <label className="text-[12px] font-normal text-ink/40 font-sans">Quantity</label>
-              <input 
-                type="number" 
-                defaultValue={1} 
-                className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm" 
+              <label className="type-small text-ink/40">Quantity</label>
+              <input
+                type="number"
+                defaultValue={1}
+                className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
               />
             </div>
           </div>
 
           <div className="space-y-3 mb-10">
-            <label className="text-[12px] font-normal text-ink/40 font-sans">Optional message</label>
-            <textarea 
-              rows={4} 
-              placeholder="Example: I’m interested in a bulk order for my team, or I’d like my name engraved in a serif font." 
+            <label className="type-small text-ink/40">Optional message</label>
+            <textarea
+              rows={4}
+              placeholder="Example: I'm interested in a bulk order for my team, or I'd like my name engraved in a serif font."
               className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm resize-none"
             />
           </div>
@@ -414,8 +414,8 @@ const BatchSection = () => {
             <button className="w-full bg-ink text-paper px-10 py-5 rounded-lg font-bold hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-3 tracking-widest text-sm">
               Join the batch <ArrowRight size={18} />
             </button>
-            <p className="text-[12px] text-muted font-sans font-normal tracking-wide max-w-sm leading-relaxed">
-              No deposit required at this time. We’ll verify your order details and lead time before we cut any metal.
+            <p className="type-small text-muted max-w-sm">
+              No deposit required at this time. We'll verify your order details and lead time before we cut any metal.
             </p>
           </div>
         </div>
@@ -430,28 +430,28 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
         <div className="flex flex-col">
           <span className="font-sans font-bold text-2xl tracking-tighter uppercase leading-none mb-4">Solid State Goods</span>
-          <span className="font-sans text-sm text-muted opacity-60 block">Buy it once. Use it forever.</span>
+          <span className="type-small text-muted opacity-60 block">Buy it once. Use it forever.</span>
         </div>
 
         <div className="flex flex-col items-start md:items-end gap-6">
           <div className="flex flex-col items-start md:items-end gap-2">
-            <span className="text-[12px] font-medium text-ink/40 font-sans">For general inquiries or custom orders</span>
-            <a href="mailto:solidstategoods@gmail.com" className="text-xl font-sans font-bold tracking-tight hover:text-muted transition-colors border-b border-ink/20 pb-1">
+            <span className="type-small text-ink/40">For general inquiries or custom orders</span>
+            <a href="mailto:solidstategoods@gmail.com" className="type-h3 hover:text-muted transition-colors border-b border-ink/20 pb-1">
               Contact Us
             </a>
           </div>
-          <a 
-            href="https://www.instagram.com/solidstategoods/" 
-            target="_blank" 
+          <a
+            href="https://www.instagram.com/solidstategoods/"
+            target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-ink/60 hover:text-ink transition-colors group"
           >
             <Instagram size={18} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[12px] font-medium tracking-tight">@solidstategoods</span>
+            <span className="type-small">@solidstategoods</span>
           </a>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-ink/5 flex flex-col md:flex-row justify-between text-muted text-[11px] font-sans">
+      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-ink/5 flex flex-col md:flex-row justify-between type-micro text-muted">
         <span>© 2026 Solid State Goods. Machined in the USA.</span>
       </div>
     </footer>
