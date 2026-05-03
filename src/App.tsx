@@ -1,32 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ArrowRight,
-  Mail,
-  MapPin,
-  Phone,
   ChevronDown,
   Menu,
   X,
-  Layers,
-  Activity,
-  Cpu,
   Instagram
 } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const navigate = useNavigate();
+
+  const handleProductsClick = () => {
+    if (window.location.pathname === '/') {
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/#products');
+    }
+    setIsOpen(false);
+  };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-paper/80 backdrop-blur-md border-b border-ink/5">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <div className="flex flex-col">
-          <span className="font-sans font-bold text-lg tracking-tighter uppercase leading-none">Solid State Goods</span>
+          <Link to="/">
+            <span className="font-sans font-bold text-lg tracking-tighter uppercase leading-none">Solid State Goods</span>
+          </Link>
         </div>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="#philosophy" className="text-sm font-medium hover:text-muted transition-colors">About</a>
-          <a href="#products" className="text-sm font-medium hover:text-muted transition-colors">Products</a>
+          <Link to="/about" className="text-sm font-medium hover:text-muted transition-colors">About</Link>
+          <button onClick={handleProductsClick} className="text-sm font-medium hover:text-muted transition-colors">Products</button>
         </div>
 
         <button
@@ -45,8 +52,8 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-20 left-0 w-full bg-paper border-b border-ink/5 p-6 flex flex-col gap-4 md:hidden"
           >
-          <a href="#philosophy" className="text-lg font-medium" onClick={() => setIsOpen(false)}>About</a>
-          <a href="#products" className="text-lg font-medium" onClick={() => setIsOpen(false)}>Products</a>
+            <Link to="/about" className="text-lg font-medium" onClick={() => setIsOpen(false)}>About</Link>
+            <button onClick={handleProductsClick} className="text-lg font-medium text-left">Products</button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -458,17 +465,63 @@ const Footer = () => {
   );
 };
 
-export default function App() {
+const ProductsCTA = () => (
+  <section className="py-32 px-6 bg-paper border-t border-ink/5">
+    <div className="max-w-7xl mx-auto text-center">
+      <h2 className="type-h2 mb-6">Ready to see what we make?</h2>
+      <p className="type-body-lg text-muted max-w-2xl mx-auto mb-12">
+        Browse The Knuckle and our finishes — built to outlast everything else in your bag.
+      </p>
+      <Link
+        to="/#products"
+        className="inline-flex items-center gap-2 bg-ink text-paper px-8 py-4 rounded-lg font-bold hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all tracking-widest text-sm"
+      >
+        See The Knuckle <ArrowRight size={18} />
+      </Link>
+    </div>
+  </section>
+);
+
+const HomePage = () => {
+  useEffect(() => {
+    if (window.location.hash === '#products') {
+      const el = document.getElementById('products');
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen selection:bg-ink selection:text-paper bg-paper">
       <Navbar />
       <main>
         <Hero />
-        <Philosophy />
         <Variants />
         <BatchSection />
       </main>
       <Footer />
     </div>
+  );
+};
+
+const AboutPage = () => (
+  <div className="min-h-screen selection:bg-ink selection:text-paper bg-paper">
+    <Navbar />
+    <main>
+      <Philosophy />
+      <ProductsCTA />
+    </main>
+    <Footer />
+  </div>
+);
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
