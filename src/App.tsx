@@ -430,7 +430,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
         <div className="flex flex-col">
           <span className="font-sans font-bold text-2xl tracking-tighter uppercase leading-none mb-4">Solid State Goods</span>
-          <span className="font-sans text-sm text-muted opacity-60 block">Buy it once and use it forever.</span>
+          <span className="font-sans text-sm text-muted opacity-60 block">Buy it once. Use it forever.</span>
         </div>
 
         <div className="flex flex-col items-start md:items-end gap-6">
