@@ -420,7 +420,7 @@ const BatchSection = () => {
             <div className="text-center py-8">
               <h3 className="type-h3 mb-4">You're on the list.</h3>
               <p className="type-body text-muted mb-8">
-                We received your inquiry and will reach out within 48 hours to confirm details.
+                We received your inquiry and will be in touch soon to confirm the details.
               </p>
               <button
                 onClick={resetForm}
