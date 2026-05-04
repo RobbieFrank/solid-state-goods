@@ -330,8 +330,7 @@ const Philosophy = () => (
 
             {/* Inscribed plate beneath the logo */}
             <div className="mt-4 flex items-center justify-between type-micro text-ink/40">
-              <span>Est. MMXXVI</span>
-              <span className="hidden sm:inline">Solid · State · Goods</span>
+              <span>Solid · State · Goods</span>
               <span>Made in USA</span>
             </div>
           </div>
