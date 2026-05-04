@@ -354,6 +354,57 @@ const Philosophy = () => (
 );
 
 const BatchSection = () => {
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [variant, setVariant] = React.useState('Silver Standard');
+  const [quantity, setQuantity] = React.useState('1');
+  const [message, setMessage] = React.useState('');
+  const [submitting, setSubmitting] = React.useState(false);
+  const [submitted, setSubmitted] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: '7f93d362-aa71-48ae-9259-764ba44d0f94',
+          subject: 'New Knuckle Preorder Inquiry',
+          from_name: 'Solid State Goods Website',
+          name,
+          email,
+          variant,
+          quantity,
+          message: message || '(none)',
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
+    } catch {
+      setError('Unable to send your inquiry. Please check your connection and try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const resetForm = () => {
+    setSubmitted(false);
+    setName('');
+    setEmail('');
+    setVariant('Silver Standard');
+    setQuantity('1');
+    setMessage('');
+    setError(null);
+  };
+
   return (
     <section id="batch" className="py-32 px-6 bg-paper border-t border-ink/5">
       <div className="max-w-3xl mx-auto">
@@ -365,66 +416,110 @@ const BatchSection = () => {
         </div>
 
         <div className="bg-white p-8 md:p-12 rounded-2xl border border-ink/10 shadow-[0_0_50px_-12px_rgba(0,0,0,0.05)] relative overflow-hidden">
-          {/* Form Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            <div className="space-y-3">
-              <label className="type-small text-ink/40">Full name *</label>
-              <input
-                type="text"
-                placeholder="Your name"
-                className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
-              />
+          {submitted ? (
+            <div className="text-center py-8">
+              <h3 className="type-h3 mb-4">You're on the list.</h3>
+              <p className="type-body text-muted mb-8">
+                We received your inquiry and will reach out within 48 hours to confirm details.
+              </p>
+              <button
+                onClick={resetForm}
+                className="type-small text-muted underline underline-offset-4 hover:text-ink transition-colors"
+              >
+                Submit another
+              </button>
             </div>
-            <div className="space-y-3">
-              <label className="type-small text-ink/40">Email address *</label>
+          ) : (
+            <form onSubmit={handleSubmit}>
               <input
-                type="email"
-                placeholder="you@domain.com"
-                className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
+                type="checkbox"
+                name="botcheck"
+                className="sr-only"
+                tabIndex={-1}
+                autoComplete="off"
               />
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            <div className="space-y-3 relative">
-              <label className="type-small text-ink/40">Variant interest</label>
-              <div className="relative">
-                <select className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors appearance-none pr-10 text-sm cursor-pointer">
-                  <option>Silver Standard</option>
-                  <option>Silver Satin</option>
-                  <option>Black Standard</option>
-                  <option>Black Custom</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ink/30" size={16} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div className="space-y-3">
+                  <label className="type-small text-ink/40">Full name *</label>
+                  <input
+                    type="text"
+                    placeholder="Your name"
+                    required
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label className="type-small text-ink/40">Email address *</label>
+                  <input
+                    type="email"
+                    placeholder="you@domain.com"
+                    required
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="space-y-3">
-              <label className="type-small text-ink/40">Quantity</label>
-              <input
-                type="number"
-                defaultValue={1}
-                className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
-              />
-            </div>
-          </div>
 
-          <div className="space-y-3 mb-10">
-            <label className="type-small text-ink/40">Optional message</label>
-            <textarea
-              rows={4}
-              placeholder="Example: I'm interested in a bulk order for my team, or I'd like my name engraved in a serif font."
-              className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm resize-none"
-            />
-          </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div className="space-y-3 relative">
+                  <label className="type-small text-ink/40">Variant interest</label>
+                  <div className="relative">
+                    <select
+                      value={variant}
+                      onChange={e => setVariant(e.target.value)}
+                      className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors appearance-none pr-10 text-sm cursor-pointer"
+                    >
+                      <option>Silver Standard</option>
+                      <option>Silver Satin</option>
+                      <option>Black Standard</option>
+                      <option>Black Custom</option>
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ink/30" size={16} />
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <label className="type-small text-ink/40">Quantity</label>
+                  <input
+                    type="number"
+                    value={quantity}
+                    onChange={e => setQuantity(e.target.value)}
+                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
+                  />
+                </div>
+              </div>
 
-          <div className="flex flex-col items-center gap-6 text-center">
-            <button className="w-full bg-ink text-paper px-10 py-5 rounded-lg font-bold hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-3 tracking-widest text-sm">
-              Join the batch <ArrowRight size={18} />
-            </button>
-            <p className="type-small text-muted max-w-sm">
-              No deposit required at this time. We'll verify your order details and lead time before we cut any metal.
-            </p>
-          </div>
+              <div className="space-y-3 mb-10">
+                <label className="type-small text-ink/40">Optional message</label>
+                <textarea
+                  rows={4}
+                  placeholder="Example: I'm interested in a bulk order for my team, or I'd like my name engraved in a serif font."
+                  value={message}
+                  onChange={e => setMessage(e.target.value)}
+                  className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm resize-none"
+                />
+              </div>
+
+              <div className="flex flex-col items-center gap-6 text-center">
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full bg-ink text-paper px-10 py-5 rounded-lg font-bold hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-3 tracking-widest text-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-ink disabled:hover:text-paper disabled:hover:scale-100"
+                >
+                  {submitting ? 'Submitting…' : 'Join the batch'} <ArrowRight size={18} />
+                </button>
+                {error && (
+                  <p className="type-small text-red-600">{error}</p>
+                )}
+                <p className="type-small text-muted max-w-sm">
+                  No deposit required at this time. We'll verify your order details and lead time before we cut any metal.
+                </p>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </section>
