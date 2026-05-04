@@ -627,6 +627,10 @@ const ProductsCTA = () => (
 
 const HomePage = () => {
   useEffect(() => {
+    document.title = 'Solid State Goods — Precision products for serious humans.';
+  }, []);
+
+  useEffect(() => {
     if (window.location.hash === '#products') {
       const el = document.getElementById('products');
       if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -646,16 +650,22 @@ const HomePage = () => {
   );
 };
 
-const AboutPage = () => (
-  <div className="min-h-screen selection:bg-ink selection:text-paper bg-paper">
-    <Navbar />
-    <main>
-      <Philosophy />
-      <ProductsCTA />
-    </main>
-    <Footer />
-  </div>
-);
+const AboutPage = () => {
+  useEffect(() => {
+    document.title = 'About — Solid State Goods';
+  }, []);
+
+  return (
+    <div className="min-h-screen selection:bg-ink selection:text-paper bg-paper">
+      <Navbar />
+      <main>
+        <Philosophy />
+        <ProductsCTA />
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 export default function App() {
   return (
