@@ -8,6 +8,15 @@ import {
   X,
   Instagram
 } from 'lucide-react';
+import Mailcheck from 'mailcheck';
+
+const DISPOSABLE_EMAIL_DOMAINS = [
+  'mailinator.com', '10minutemail.com', 'guerrillamail.com', 'tempmail.com',
+  'throwaway.email', 'yopmail.com', 'getnada.com', 'temp-mail.org',
+  'maildrop.cc', 'fakeinbox.com', 'trashmail.com', 'sharklasers.com',
+  'guerrillamailblock.com', 'pokemail.net', 'spam4.me', 'tempinbox.com',
+  'dispostable.com', 'mintemail.com', 'mytrashmail.com', 'mailnesia.com'
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -362,9 +371,29 @@ const BatchSection = () => {
   const [submitting, setSubmitting] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [emailError, setEmailError] = React.useState<string | null>(null);
+  const [emailSuggestion, setEmailSuggestion] = React.useState<string | null>(null);
+
+  const validateEmail = (value: string) => {
+    if (!value || !value.includes('@')) return;
+    const domain = value.split('@')[1]?.toLowerCase();
+    if (DISPOSABLE_EMAIL_DOMAINS.includes(domain)) {
+      setEmailError('Please use a permanent email address.');
+      setEmailSuggestion(null);
+      return;
+    }
+    setEmailError(null);
+    Mailcheck.run({
+      email: value,
+      suggested: (suggestion: { full: string }) => setEmailSuggestion(suggestion.full),
+      empty: () => setEmailSuggestion(null),
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    validateEmail(email);
+    if (emailError) return;
     setSubmitting(true);
     setError(null);
     try {
@@ -403,6 +432,8 @@ const BatchSection = () => {
     setQuantity('1');
     setMessage('');
     setError(null);
+    setEmailError(null);
+    setEmailSuggestion(null);
   };
 
   return (
@@ -459,8 +490,25 @@ const BatchSection = () => {
                     required
                     value={email}
                     onChange={e => setEmail(e.target.value)}
+                    onBlur={e => validateEmail(e.target.value)}
                     className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
                   />
+                  {emailError && (
+                    <p className="type-small text-red-600 mt-2">{emailError}</p>
+                  )}
+                  {!emailError && emailSuggestion && (
+                    <p className="type-small text-muted mt-2">
+                      Did you mean{' '}
+                      <button
+                        type="button"
+                        onClick={() => { setEmail(emailSuggestion); setEmailSuggestion(null); }}
+                        className="font-medium text-ink underline underline-offset-2 hover:text-muted transition-colors"
+                      >
+                        {emailSuggestion}
+                      </button>
+                      ?
+                    </p>
+                  )}
                 </div>
               </div>
 
