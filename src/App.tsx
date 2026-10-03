@@ -96,9 +96,11 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="type-body-lg text-muted max-w-2xl mx-auto mb-12"
+          className="type-body-lg text-muted max-w-2xl lg:max-w-none mx-auto mb-12"
         >
-          Welcome to Solid State Goods. We over-engineer everyday products to last a lifetime. Buy it once and use it forever. We guarantee that you'll never need another one, unless you want two or three, or…
+          <span className="lg:whitespace-nowrap">Welcome to Solid State Goods. We over-engineer everyday products</span>{' '}
+          <br className="hidden lg:block" />
+          <span className="lg:whitespace-nowrap">that last a lifetime. Buy it once and use it forever.</span>
         </motion.p>
 
         <motion.div
@@ -119,97 +121,129 @@ const Hero = () => {
   );
 };
 
-interface VariantCardProps {
-  label: string;
+interface Finish {
   title: string;
   desc: string;
   price: string;
+  pricePrefix?: string;
   image: string;
+  swatch: string;
   badge?: string;
+  comingSoon?: boolean;
 }
 
-const VariantCard: React.FC<VariantCardProps> = ({
-  label,
-  title,
-  desc,
-  price,
-  image,
-  badge
-}) => (
-  <motion.div
-    whileHover={{ y: -8 }}
-    className="group bg-white rounded-2xl overflow-hidden border border-ink/5 shadow-sm hover:shadow-xl transition-all h-full flex flex-col"
-  >
-    <div className="aspect-square relative overflow-hidden bg-paper/50">
-      <img
-        src={image}
-        alt={title}
-        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        referrerPolicy="no-referrer"
-      />
-      {badge && (
-        <span className="absolute top-4 right-4 bg-ink text-paper type-micro px-3 py-1 rounded-full">
-          {badge}
-        </span>
-      )}
-    </div>
-    <div className="p-8 flex-grow flex flex-col">
-      <span className="technical-label">{label}</span>
-      <h3 className="type-h3 mb-3">{title}</h3>
-      <p className="type-body text-muted mb-6 flex-grow">{desc}</p>
-      <div className="pt-6 border-t border-ink/5 flex items-end justify-between">
-        <div className="flex flex-col">
-          <span className="technical-label !mb-0 opacity-50">Retail</span>
-          <span className="text-2xl font-mono tracking-tighter">{price}</span>
+const FINISHES: Finish[] = [
+  {
+    title: "Silver Standard",
+    desc: "Raw billet finish. Clean, industrial, and pairs perfectly with any setup.",
+    price: "$60",
+    image: "/silver_standard.png",
+    swatch: "#C9CBCE"
+  },
+  {
+    title: "Silver Satin",
+    desc: "Bead-blasted satin finish. Muted, refined, and fits right into any setup.",
+    price: "$70",
+    image: "/silver_satin.png",
+    swatch: "#A9ACB0",
+    comingSoon: true
+  },
+  {
+    title: "Black Standard",
+    desc: "Hard anodized matte black. Stealthy and scratch-resistant.",
+    price: "$80",
+    image: "/anodized_black.png",
+    swatch: "#1C1C1C"
+  },
+  {
+    title: "Black Custom",
+    badge: "Most Popular For Team Sets",
+    desc: 'Laser-engrave your name, team logo, or anything you want. Image dimensions 3" W x 3.5" L',
+    price: "$90",
+    pricePrefix: "Starting at",
+    image: "/anodized_black_x.png",
+    swatch: "#1C1C1C"
+  }
+];
+
+// Lets the finish picker pre-select a variant in the preorder form.
+const SELECT_VARIANT_EVENT = 'ssg:select-variant';
+
+const FinishPicker = () => {
+  const [selected, setSelected] = React.useState(0);
+  const finish = FINISHES[selected];
+
+  const reserve = () => {
+    window.dispatchEvent(new CustomEvent(SELECT_VARIANT_EVENT, { detail: finish.title }));
+    document.getElementById('batch')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <div className="group max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden border border-ink/5 shadow-sm hover:shadow-xl transition-shadow grid grid-cols-1 md:grid-cols-[1.15fr_1fr] mb-16">
+      <div className="aspect-square relative overflow-hidden bg-paper/50">
+        {FINISHES.map((f, i) => (
+          <img
+            key={f.title}
+            src={f.image}
+            alt={f.title}
+            className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] duration-700 group-hover:scale-110 ${i === selected ? 'opacity-100' : 'opacity-0'}`}
+            referrerPolicy="no-referrer"
+          />
+        ))}
+      </div>
+
+      <div className="p-8 md:p-10 flex flex-col">
+        <span className="technical-label">Finish</span>
+        <div className="grid grid-cols-2 gap-2 mb-8" role="radiogroup" aria-label="Finish">
+          {FINISHES.map((f, i) => (
+            <button
+              key={f.title}
+              type="button"
+              role="radio"
+              aria-checked={i === selected}
+              onClick={() => setSelected(i)}
+              className={`flex items-center gap-3 px-3 py-3 rounded-lg border text-left transition-colors ${i === selected ? 'border-ink ring-1 ring-ink' : 'border-ink/10 hover:border-ink/30'}`}
+            >
+              <span className="w-4 h-4 rounded-full shrink-0 border border-ink/10" style={{ backgroundColor: f.swatch }} />
+              <span className="flex flex-col">
+                <span className="type-small text-ink">{f.title}</span>
+                {f.comingSoon && <span className="type-micro text-muted">Coming soon</span>}
+              </span>
+            </button>
+          ))}
         </div>
-        <a
-          href="#batch"
-          className="inline-flex items-center gap-0 group-hover:gap-2 p-3 group-hover:px-4 bg-ink/5 rounded-lg hover:bg-ink hover:text-paper transition-all duration-300 group-hover:bg-ink group-hover:text-paper"
-        >
-          <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-all duration-300 text-xs font-bold tracking-tight">
-            Reserve
+
+        {(finish.badge || finish.comingSoon) && (
+          <span className="self-start bg-ink/[0.06] text-ink/70 type-micro uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+            {finish.badge ?? 'Coming Soon'}
           </span>
-          <ArrowRight size={20} className="shrink-0" />
-        </a>
+        )}
+        <h3 className="type-h3 mb-3">{finish.title}</h3>
+        <p className="type-body text-muted mb-6 flex-grow">{finish.desc}</p>
+
+        <div className="pt-6 border-t border-ink/5 flex items-center justify-between gap-4">
+          <div className="flex flex-col">
+            {finish.pricePrefix && (
+              <span className="technical-label !mb-0 opacity-50">{finish.pricePrefix}</span>
+            )}
+            <span className="text-2xl font-mono tracking-tighter">{finish.price}</span>
+          </div>
+          <button
+            type="button"
+            onClick={reserve}
+            className={`inline-flex items-center gap-2 px-5 py-3 rounded-lg text-xs font-bold tracking-tight transition-colors ${finish.comingSoon ? 'bg-ink/5 text-ink hover:bg-ink/10' : 'bg-ink text-paper hover:bg-ink/85'}`}
+          >
+            {finish.comingSoon ? 'Notify me' : `Reserve ${finish.title}`}
+            <ArrowRight size={16} className="shrink-0" />
+          </button>
+        </div>
       </div>
     </div>
-  </motion.div>
-);
+  );
+};
 
 const Variants = () => {
   const [isSpecsOpen, setIsSpecsOpen] = React.useState(false);
-  const variants: VariantCardProps[] = [
-    {
-      label: "Now Available",
-      title: "Silver Standard",
-      desc: "Fresh-out-of-the-oven raw billet finish. Clean, industrial, and pairs perfectly with any high-end setup.",
-      price: "$60",
-      image: "/silver_standard.png"
-    },
-    {
-      label: "Coming Soon",
-      title: "Silver Satin",
-      desc: "Smooth powder coat finish. All the weight, none of the shine. Ideal for low-glare environments.",
-      price: "$70",
-      image: "/silver_satin.png"
-    },
-    {
-      label: "Now Available",
-      title: "Black Standard",
-      desc: "Hard anodized matte black. Built for the player who means business. Stealthy and scratch-resistant.",
-      price: "$80",
-      image: "/anodized_black.png"
-    },
-    {
-      label: "Now Available",
-      title: "Black Custom",
-      badge: "Most Popular For Team Sets",
-      desc: "Laser-engrave your name, team logo, or anything you want. Precision marked forever.",
-      price: "From $90",
-      image: "/anodized_black_x.png"
-    }
-  ];
-
   const specs = [
     { label: 'DIMENSIONS', content: '• Width: 3"\n• Length: 3.5"\n• Height: .75"' },
     { label: 'CAPACITY', content: 'Designed for dual-cue storage, ensuring a precise fit for all standard pool and break cues.' },
@@ -222,27 +256,15 @@ const Variants = () => {
   ];
 
   return (
-    <section id="products" className="py-32 px-6 bg-paper">
+    <section id="products" className="pt-10 pb-32 px-6 bg-paper">
       <div className="max-w-7xl mx-auto text-center mb-24">
         <h2 className="type-h1 mb-6">The Knuckle</h2>
         <p className="type-body max-w-2xl mx-auto text-muted">
-          Most cue holders are cheap, generic, and built to fail. We built The Knuckle because we wanted something better. It's a solid, precision-machined block of aluminum designed to stay exactly where you put it. It's the last cue holder you'll ever need to buy.
+          Most cue holders are cheap, generic, and fail. We built The Knuckle because we wanted something better. It's a solid, precision-machined block of aluminum designed to be the last cue holder you'll ever need to buy.
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-        {variants.map((v, i) => (
-          <VariantCard
-            key={i}
-            label={v.label}
-            title={v.title}
-            desc={v.desc}
-            price={v.price}
-            image={v.image}
-            badge={v.badge}
-          />
-        ))}
-      </div>
+      <FinishPicker />
 
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-12">
         <div className="text-center">
@@ -374,6 +396,12 @@ const BatchSection = () => {
   const [error, setError] = React.useState<string | null>(null);
   const [emailError, setEmailError] = React.useState<string | null>(null);
   const [emailSuggestion, setEmailSuggestion] = React.useState<string | null>(null);
+
+  useEffect(() => {
+    const onSelect = (e: Event) => setVariant((e as CustomEvent<string>).detail);
+    window.addEventListener(SELECT_VARIANT_EVENT, onSelect);
+    return () => window.removeEventListener(SELECT_VARIANT_EVENT, onSelect);
+  }, []);
 
   const validateEmail = (value: string) => {
     if (!value || !value.includes('@')) return;
