@@ -9,6 +9,7 @@ import {
   Instagram
 } from 'lucide-react';
 import Mailcheck from 'mailcheck';
+import { Analytics } from '@vercel/analytics/react';
 
 const DISPOSABLE_EMAIL_DOMAINS = [
   'mailinator.com', '10minutemail.com', 'guerrillamail.com', 'tempmail.com',
@@ -364,6 +365,7 @@ const Philosophy = () => (
 const BatchSection = () => {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [phone, setPhone] = React.useState('');
   const [variant, setVariant] = React.useState('Silver Standard');
   const [quantity, setQuantity] = React.useState('1');
   const [message, setMessage] = React.useState('');
@@ -405,6 +407,7 @@ const BatchSection = () => {
           from_name: 'Solid State Goods Website',
           name,
           email,
+          phone: phone.trim() || '(not provided)',
           variant,
           quantity,
           message: message || '(none)',
@@ -427,6 +430,7 @@ const BatchSection = () => {
     setSubmitted(false);
     setName('');
     setEmail('');
+    setPhone('');
     setVariant('Silver Standard');
     setQuantity('1');
     setMessage('');
@@ -509,6 +513,21 @@ const BatchSection = () => {
                     </p>
                   )}
                 </div>
+              </div>
+
+              <div className="space-y-3 mb-8">
+                <label className="type-small text-ink/40">
+                  Phone number<span className="text-muted"> (optional)</span>
+                </label>
+                <input
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  placeholder="(555) 123-4567"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
@@ -674,6 +693,7 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }
