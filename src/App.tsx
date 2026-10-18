@@ -333,6 +333,9 @@ const Philosophy = () => (
   </section>
 );
 
+const MAX_QUANTITY_LABEL = 'More than 5';
+const QUANTITY_OPTIONS = ['1', '2', '3', '4', '5', MAX_QUANTITY_LABEL];
+
 const BatchSection = () => {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -393,7 +396,7 @@ const BatchSection = () => {
       const data = await res.json();
       if (data.success) {
         setSubmitted(true);
-        window.gtag?.('event', 'generate_lead', { variant, quantity: Number(quantity) || 1 });
+        window.gtag?.('event', 'generate_lead', { variant, quantity });
       } else {
         setError('Something went wrong. Please try again.');
       }
@@ -528,12 +531,19 @@ const BatchSection = () => {
                 </div>
                 <div className="space-y-3">
                   <label className="type-small text-muted">Quantity</label>
-                  <input
-                    type="number"
-                    value={quantity}
-                    onChange={e => setQuantity(e.target.value)}
-                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors type-small"
-                  />
+                  <div className="relative">
+                    <select
+                      value={quantity}
+                      onChange={e => setQuantity(e.target.value)}
+                      className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors appearance-none pr-10 type-small cursor-pointer"
+                    >
+                      {QUANTITY_OPTIONS.map(q => <option key={q}>{q}</option>)}
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ink/30" size={16} />
+                  </div>
+                  {quantity === MAX_QUANTITY_LABEL && (
+                    <p className="type-small text-muted">Tell us the quantity you need in the message below.</p>
+                  )}
                 </div>
               </div>
 
@@ -688,6 +698,7 @@ const PRIVACY_SECTIONS: { title: string; body: React.ReactNode }[] = [
         <p>We use your form details only to respond to your inquiry, confirm your order and lead time, and contact you about your order.</p>
         <p>We use usage data to understand how people find and use the site so we can improve it.</p>
         <p>We don't sell, rent, or trade your personal information, and we don't send marketing email unless you ask us to.</p>
+        <p>We currently sell and ship within the United States.</p>
       </>
     ),
   },
