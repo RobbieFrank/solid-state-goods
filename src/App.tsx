@@ -120,7 +120,7 @@ const Hero = () => {
         >
           <a
             href="#batch"
-            className="w-full sm:w-auto bg-ink text-paper px-8 py-4 rounded-lg type-small font-medium hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto bg-ink text-paper border border-ink px-8 py-4 rounded-lg type-small font-medium hover:bg-transparent hover:text-ink transition-colors flex items-center justify-center gap-2"
           >
             Preorder The Knuckle <ArrowRight size={18} />
           </a>
@@ -146,23 +146,23 @@ const FINISHES: Finish[] = [
     title: "Silver Satin",
     desc: "Bead-blasted satin finish. Muted, refined, and fits right into any setup.",
     price: "$70",
-    image: "/silver_satin.png",
+    image: "/silver_satin.jpg",
     swatch: "#A9ACB0"
   },
   {
     title: "Black Standard",
     desc: "Hard anodized matte black. Stealthy and scratch-resistant.",
     price: "$80",
-    image: "/anodized_black.png",
+    image: "/anodized_black.jpg",
     swatch: "#1C1C1C"
   },
   {
     title: "Black Custom",
     badge: "Most Popular For Team Sets",
-    desc: 'Laser-engrave your name, team logo, or anything you want. Image dimensions 3" W x 3.5" L',
+    desc: 'Laser-engrave your name, team logo, or anything you want. Image dimensions 2.625" W x 2.625" L',
     price: "$90",
     pricePrefix: "Starting at",
-    image: "/anodized_black_x.png",
+    image: "/anodized_black_x.jpg",
     swatch: "#1C1C1C"
   }
 ];
@@ -180,14 +180,14 @@ const FinishPicker = () => {
   };
 
   return (
-    <div className="group max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden border border-ink/5 shadow-sm hover:shadow-xl transition-shadow grid grid-cols-1 md:grid-cols-[1.15fr_1fr] mb-16">
+    <div className="group max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden border border-ink/5 shadow-sm grid grid-cols-1 md:grid-cols-[1.15fr_1fr] mb-16">
       <div className="aspect-square relative overflow-hidden bg-paper/50">
         {FINISHES.map((f, i) => (
           <img
             key={f.title}
             src={f.image}
             alt={f.title}
-            className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] duration-700 group-hover:scale-110 ${i === selected ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === selected ? 'opacity-100' : 'opacity-0'}`}
             referrerPolicy="no-referrer"
           />
         ))}
@@ -232,7 +232,7 @@ const FinishPicker = () => {
           <button
             type="button"
             onClick={reserve}
-            className={`inline-flex items-center gap-2 px-5 py-3 rounded-lg type-small font-medium transition-colors ${finish.comingSoon ? 'bg-ink/5 text-ink hover:bg-ink/10' : 'bg-ink text-paper hover:bg-ink/85'}`}
+            className={`inline-flex items-center gap-2 px-5 py-3 rounded-lg type-small font-medium transition-colors ${finish.comingSoon ? 'bg-transparent text-ink border border-ink hover:bg-ink hover:text-paper' : 'bg-ink text-paper border border-ink hover:bg-transparent hover:text-ink'}`}
           >
             {finish.comingSoon ? 'Notify me' : `Reserve ${finish.title}`}
             <ArrowRight size={16} className="shrink-0" />
@@ -245,7 +245,7 @@ const FinishPicker = () => {
 
 const Variants = () => {
   const specs = [
-    { label: 'DIMENSIONS', content: '• Width: 3"\n• Length: 3.5"\n• Height: .75"' },
+    { label: 'DIMENSIONS', content: '• Width: 3"\n• Length: 3.75"\n• Height: .75"' },
     { label: 'CAPACITY', content: 'Designed for dual-cue storage, ensuring a precise fit for all standard pool and break cues.' },
     { label: 'CHASSIS', content: 'CNC-machined from a single, solid block of 6061-T6 Billet Aluminum.' },
     { label: 'STABILITY', content: 'Features a high-friction, non-marring grip pad that is safe for use on any surface.' },
@@ -446,7 +446,7 @@ const BatchSection = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div className="space-y-3">
-                  <label className="type-small text-ink/40">Full name *</label>
+                  <label className="type-small text-muted">Full name *</label>
                   <input
                     type="text"
                     placeholder="Your name"
@@ -457,7 +457,7 @@ const BatchSection = () => {
                   />
                 </div>
                 <div className="space-y-3">
-                  <label className="type-small text-ink/40">Email address *</label>
+                  <label className="type-small text-muted">Email address *</label>
                   <input
                     type="email"
                     placeholder="you@domain.com"
@@ -487,7 +487,7 @@ const BatchSection = () => {
               </div>
 
               <div className="space-y-3 mb-8">
-                <label className="type-small text-ink/40">
+                <label className="type-small text-muted">
                   Phone number<span className="text-muted"> (optional)</span>
                 </label>
                 <input
@@ -503,7 +503,7 @@ const BatchSection = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div className="space-y-3 relative">
-                  <label className="type-small text-ink/40">Variant interest</label>
+                  <label className="type-small text-muted">Variant interest</label>
                   <div className="relative">
                     <select
                       value={variant}
@@ -513,12 +513,14 @@ const BatchSection = () => {
                       <option>Silver Satin</option>
                       <option>Black Standard</option>
                       <option>Black Custom</option>
+                      <option>Multiple variants</option>
+                      <option>Something else</option>
                     </select>
                     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ink/30" size={16} />
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <label className="type-small text-ink/40">Quantity</label>
+                  <label className="type-small text-muted">Quantity</label>
                   <input
                     type="number"
                     value={quantity}
@@ -529,7 +531,7 @@ const BatchSection = () => {
               </div>
 
               <div className="space-y-3 mb-10">
-                <label className="type-small text-ink/40">Optional message</label>
+                <label className="type-small text-muted">Optional message</label>
                 <textarea
                   rows={4}
                   placeholder="Example: I'm interested in a bulk order for my team, or I'd like my name engraved in a serif font."
@@ -537,13 +539,14 @@ const BatchSection = () => {
                   onChange={e => setMessage(e.target.value)}
                   className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors type-small resize-none"
                 />
+                <p className="type-small text-muted">Have a product idea of your own? We can help design, machine, and build it. Share the details above.</p>
               </div>
 
               <div className="flex flex-col items-center gap-6 text-center">
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full bg-ink text-paper px-10 py-5 rounded-lg type-small font-medium hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-ink disabled:hover:text-paper disabled:hover:scale-100"
+                  className="w-full bg-ink text-paper border border-ink px-10 py-5 rounded-lg type-small font-medium hover:bg-transparent hover:text-ink transition-colors flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-ink disabled:hover:text-paper"
                 >
                   {submitting ? 'Submitting…' : 'Join the batch'} <ArrowRight size={18} />
                 </button>
@@ -607,7 +610,7 @@ const ProductsCTA = () => (
       </p>
       <Link
         to="/#products"
-        className="inline-flex items-center gap-2 bg-ink text-paper px-8 py-4 rounded-lg type-small font-medium hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all"
+        className="inline-flex items-center gap-2 bg-ink text-paper border border-ink px-8 py-4 rounded-lg type-small font-medium hover:bg-transparent hover:text-ink transition-colors"
       >
         See The Knuckle <ArrowRight size={18} />
       </Link>

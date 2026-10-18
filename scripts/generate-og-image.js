@@ -93,7 +93,7 @@ const svgText = `
 
 // ── Product image ──────────────────────────────────────────────────────────────
 // Resize to fit inside 480×480, preserving the original wood-grain background.
-const productBuf = await sharp(path.join(publicDir, 'anodized_black.png'))
+const productBuf = await sharp(path.join(publicDir, 'anodized_black.jpg'))
   .resize({ width: 480, height: 480, fit: 'inside' })
   .png()
   .toBuffer();
