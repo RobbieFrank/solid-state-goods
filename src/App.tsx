@@ -30,7 +30,7 @@ const Logo = () => (
     <span className="w-9 h-9 rounded-full bg-ink text-paper flex items-center justify-center font-sans font-bold text-[13px] tracking-tight leading-none pb-px" aria-hidden="true">
       ssg
     </span>
-    <span className="font-sans font-bold text-[22px] tracking-tight leading-none pb-0.5">solid state goods</span>
+    <span className="font-sans font-bold text-[22px] tracking-tight leading-none pb-0.5 whitespace-nowrap">solid state goods</span>
   </span>
 );
 
@@ -563,6 +563,9 @@ const BatchSection = () => {
                 <p className="type-small text-muted max-w-sm">
                   No deposit required at this time. We'll verify your order details and lead time before we cut any metal.
                 </p>
+                <p className="type-small text-muted max-w-sm">
+                  By submitting, you agree to our <Link to="/privacy" className="text-ink underline underline-offset-4 hover:text-muted transition-colors">Privacy Policy</Link>.
+                </p>
               </div>
             </form>
           )}
@@ -603,6 +606,7 @@ const Footer = () => {
       </div>
       <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-ink/5 flex flex-col md:flex-row justify-between type-micro text-muted">
         <span>© 2026 Solid State Goods. Machined in the USA.</span>
+        <Link to="/privacy" className="hover:text-ink transition-colors">Privacy Policy</Link>
       </div>
     </footer>
   );
@@ -667,12 +671,96 @@ const AboutPage = () => {
   );
 };
 
+const PRIVACY_SECTIONS: { title: string; body: React.ReactNode }[] = [
+  {
+    title: 'What we collect',
+    body: (
+      <>
+        <p>When you submit the preorder form, we collect what you enter: your name, email address, phone number (optional), the finish and quantity you're interested in, and any message you include.</p>
+        <p>When you browse the site, we collect anonymous usage data such as the pages you visit, how you arrived (for example, from Instagram or a search), your general location (country or city), and your device and browser type.</p>
+      </>
+    ),
+  },
+  {
+    title: 'How we use it',
+    body: (
+      <>
+        <p>We use your form details only to respond to your inquiry, confirm your order and lead time, and contact you about your order.</p>
+        <p>We use usage data to understand how people find and use the site so we can improve it.</p>
+        <p>We don't sell, rent, or trade your personal information, and we don't send marketing email unless you ask us to.</p>
+      </>
+    ),
+  },
+  {
+    title: 'Services we use',
+    body: (
+      <>
+        <p><span className="text-ink">Web3Forms</span> delivers preorder form submissions to our email inbox.</p>
+        <p><span className="text-ink">Google Analytics</span> measures site traffic. It uses cookies to recognize returning visitors. You can opt out with Google's <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-ink underline underline-offset-4 hover:text-muted transition-colors">browser add-on</a> or by blocking cookies in your browser.</p>
+        <p><span className="text-ink">Vercel</span> hosts the site and provides privacy-friendly analytics that do not use cookies.</p>
+        <p>Each service handles data under its own privacy policy.</p>
+      </>
+    ),
+  },
+  {
+    title: 'How long we keep it',
+    body: (
+      <p>We keep preorder emails for as long as needed to fulfill and support your order. Analytics data is kept for up to 14 months.</p>
+    ),
+  },
+  {
+    title: 'Your choices',
+    body: (
+      <p>You can ask us to show you, correct, or delete the information you've sent us at any time. Email <a href="mailto:solidstategoods@gmail.com" className="text-ink underline underline-offset-4 hover:text-muted transition-colors">solidstategoods@gmail.com</a> and we'll take care of it.</p>
+    ),
+  },
+  {
+    title: 'Changes',
+    body: (
+      <p>If we change this policy, we'll update it on this page and change the date below.</p>
+    ),
+  },
+];
+
+const PrivacyPage = () => {
+  useEffect(() => {
+    document.title = 'Privacy Policy — Solid State Goods';
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="min-h-screen selection:bg-ink selection:text-paper bg-paper">
+      <Navbar />
+      <main className="pt-40 pb-32 px-6">
+        <div className="max-w-2xl mx-auto">
+          <span className="technical-label">Legal</span>
+          <h1 className="type-h1 mb-6 text-ink">Privacy Policy</h1>
+          <p className="type-body-lg text-muted mb-16">
+            We collect as little as we need to answer your inquiry and run the site. Here's exactly what that means.
+          </p>
+          <div className="space-y-12">
+            {PRIVACY_SECTIONS.map(section => (
+              <section key={section.title} className="pt-8 border-t border-ink/10">
+                <h2 className="type-h3 mb-4 text-ink">{section.title}</h2>
+                <div className="type-body text-muted space-y-4">{section.body}</div>
+              </section>
+            ))}
+          </div>
+          <p className="type-micro text-muted mt-16">Last updated October 18, 2026</p>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Analytics />
