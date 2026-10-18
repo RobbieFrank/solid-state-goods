@@ -19,6 +19,12 @@ const DISPOSABLE_EMAIL_DOMAINS = [
   'dispostable.com', 'mintemail.com', 'mytrashmail.com', 'mailnesia.com'
 ];
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 const Logo = () => (
   <span className="flex items-center gap-2.5 text-ink">
     <span className="w-9 h-9 rounded-full bg-ink text-paper flex items-center justify-center font-sans font-bold text-[13px] tracking-tight leading-none pb-px" aria-hidden="true">
@@ -387,6 +393,7 @@ const BatchSection = () => {
       const data = await res.json();
       if (data.success) {
         setSubmitted(true);
+        window.gtag?.('event', 'generate_lead', { variant, quantity: Number(quantity) || 1 });
       } else {
         setError('Something went wrong. Please try again.');
       }
