@@ -19,6 +19,15 @@ const DISPOSABLE_EMAIL_DOMAINS = [
   'dispostable.com', 'mintemail.com', 'mytrashmail.com', 'mailnesia.com'
 ];
 
+const Logo = () => (
+  <span className="flex items-center gap-2.5 text-ink">
+    <span className="w-9 h-9 rounded-full bg-ink text-paper flex items-center justify-center font-sans font-bold text-[13px] tracking-tight leading-none pb-px" aria-hidden="true">
+      ssg
+    </span>
+    <span className="font-sans font-bold text-[22px] tracking-tight leading-none pb-0.5">solid state goods</span>
+  </span>
+);
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const navigate = useNavigate();
@@ -36,14 +45,14 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 w-full z-50 bg-paper/80 backdrop-blur-md border-b border-ink/5">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <div className="flex flex-col">
-          <Link to="/">
-            <span className="font-sans font-bold text-lg tracking-tighter uppercase leading-none">Solid State Goods</span>
+          <Link to="/" aria-label="Solid State Goods home">
+            <Logo />
           </Link>
         </div>
 
         <div className="hidden md:flex items-center gap-8">
-          <Link to="/about" className="text-sm font-medium hover:text-muted transition-colors">About</Link>
-          <button onClick={handleProductsClick} className="text-sm font-medium hover:text-muted transition-colors">Products</button>
+          <Link to="/about" className="type-small font-medium hover:text-muted transition-colors">About</Link>
+          <button onClick={handleProductsClick} className="type-small font-medium hover:text-muted transition-colors">Products</button>
         </div>
 
         <button
@@ -62,8 +71,8 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-20 left-0 w-full bg-paper border-b border-ink/5 p-6 flex flex-col gap-4 md:hidden"
           >
-            <Link to="/about" className="text-lg font-medium" onClick={() => setIsOpen(false)}>About</Link>
-            <button onClick={handleProductsClick} className="text-lg font-medium text-left">Products</button>
+            <Link to="/about" className="type-h3" onClick={() => setIsOpen(false)}>About</Link>
+            <button onClick={handleProductsClick} className="type-h3 text-left">Products</button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -111,7 +120,7 @@ const Hero = () => {
         >
           <a
             href="#batch"
-            className="w-full sm:w-auto bg-ink text-paper px-8 py-4 rounded-lg font-bold hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-2 tracking-widest text-sm"
+            className="w-full sm:w-auto bg-ink text-paper px-8 py-4 rounded-lg type-small font-medium hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
           >
             Preorder The Knuckle <ArrowRight size={18} />
           </a>
@@ -134,19 +143,11 @@ interface Finish {
 
 const FINISHES: Finish[] = [
   {
-    title: "Silver Standard",
-    desc: "Raw billet finish. Clean, industrial, and pairs perfectly with any setup.",
-    price: "$60",
-    image: "/silver_standard.png",
-    swatch: "#C9CBCE"
-  },
-  {
     title: "Silver Satin",
     desc: "Bead-blasted satin finish. Muted, refined, and fits right into any setup.",
     price: "$70",
     image: "/silver_satin.png",
-    swatch: "#A9ACB0",
-    comingSoon: true
+    swatch: "#A9ACB0"
   },
   {
     title: "Black Standard",
@@ -194,7 +195,7 @@ const FinishPicker = () => {
 
       <div className="p-8 md:p-10 flex flex-col">
         <span className="technical-label">Finish</span>
-        <div className="grid grid-cols-2 gap-2 mb-8" role="radiogroup" aria-label="Finish">
+        <div className="grid grid-cols-1 gap-2 mb-8" role="radiogroup" aria-label="Finish">
           {FINISHES.map((f, i) => (
             <button
               key={f.title}
@@ -205,7 +206,7 @@ const FinishPicker = () => {
               className={`flex items-center gap-3 px-3 py-3 rounded-lg border text-left transition-colors ${i === selected ? 'border-ink ring-1 ring-ink' : 'border-ink/10 hover:border-ink/30'}`}
             >
               <span className="w-4 h-4 rounded-full shrink-0 border border-ink/10" style={{ backgroundColor: f.swatch }} />
-              <span className="flex flex-col">
+              <span className="flex flex-1 items-center justify-between gap-2">
                 <span className="type-small text-ink">{f.title}</span>
                 {f.comingSoon && <span className="type-micro text-muted">Coming soon</span>}
               </span>
@@ -214,7 +215,7 @@ const FinishPicker = () => {
         </div>
 
         {(finish.badge || finish.comingSoon) && (
-          <span className="self-start bg-ink/[0.06] text-ink/70 type-micro uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+          <span className="self-start bg-ink/[0.06] text-ink/70 type-micro px-3 py-1 rounded-full mb-3">
             {finish.badge ?? 'Coming Soon'}
           </span>
         )}
@@ -226,12 +227,12 @@ const FinishPicker = () => {
             {finish.pricePrefix && (
               <span className="technical-label !mb-0 opacity-50">{finish.pricePrefix}</span>
             )}
-            <span className="text-2xl font-mono tracking-tighter">{finish.price}</span>
+            <span className="type-h3">{finish.price}</span>
           </div>
           <button
             type="button"
             onClick={reserve}
-            className={`inline-flex items-center gap-2 px-5 py-3 rounded-lg text-xs font-bold tracking-tight transition-colors ${finish.comingSoon ? 'bg-ink/5 text-ink hover:bg-ink/10' : 'bg-ink text-paper hover:bg-ink/85'}`}
+            className={`inline-flex items-center gap-2 px-5 py-3 rounded-lg type-small font-medium transition-colors ${finish.comingSoon ? 'bg-ink/5 text-ink hover:bg-ink/10' : 'bg-ink text-paper hover:bg-ink/85'}`}
           >
             {finish.comingSoon ? 'Notify me' : `Reserve ${finish.title}`}
             <ArrowRight size={16} className="shrink-0" />
@@ -243,14 +244,13 @@ const FinishPicker = () => {
 };
 
 const Variants = () => {
-  const [isSpecsOpen, setIsSpecsOpen] = React.useState(false);
   const specs = [
     { label: 'DIMENSIONS', content: '• Width: 3"\n• Length: 3.5"\n• Height: .75"' },
     { label: 'CAPACITY', content: 'Designed for dual-cue storage, ensuring a precise fit for all standard pool and break cues.' },
     { label: 'CHASSIS', content: 'CNC-machined from a single, solid block of 6061-T6 Billet Aluminum.' },
     { label: 'STABILITY', content: 'Features a high-friction, non-marring grip pad that is safe for use on any surface.' },
     { label: 'ENGINEERING', content: 'Utilizes solid-state architecture, meaning there are zero moving parts and zero points of failure.' },
-    { label: 'FINISHES', content: '• Machine-finished (Silver Standard)\n• Bead-Blasted (Silver Satin)\n• Anodized (Black Standard and Black Custom)' },
+    { label: 'FINISHES', content: '• Bead-Blasted (Silver Satin)\n• Anodized (Black Standard and Black Custom)' },
     { label: 'PORTABILITY', content: 'Enhanced by its pocket-sized footprint, which is ideal for league play and tournament travel.' },
     { label: 'MAINTENANCE', content: 'Corrosion-resistant, impervious to moisture, and built to withstand high-impact drops.' },
   ];
@@ -274,49 +274,24 @@ const Variants = () => {
         </div>
 
         <div className="w-full">
-          <button
-            onClick={() => setIsSpecsOpen(!isSpecsOpen)}
-            className="flex items-center gap-4 group mx-auto mb-8"
-          >
-            <div className="w-20 h-[1px] bg-ink/10 group-hover:w-28 transition-all duration-500" />
-            <div className="flex items-center gap-3 px-6 py-3 bg-white border border-ink/10 rounded-full shadow-sm hover:shadow-md hover:border-ink/20 transition-all">
-              <span className="type-small text-ink/80">Product Details</span>
-              <motion.div
-                animate={{ rotate: isSpecsOpen ? 180 : 0 }}
-                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-              >
-                <ChevronDown size={14} className="text-ink/40" />
-              </motion.div>
-            </div>
-            <div className="w-20 h-[1px] bg-ink/10 group-hover:w-28 transition-all duration-500" />
-          </button>
+          <div className="flex items-center gap-6 mb-8">
+            <div className="flex-1 h-px bg-ink/10" />
+            <h3 className="type-h3 text-ink">Product Details</h3>
+            <div className="flex-1 h-px bg-ink/10" />
+          </div>
 
-          <AnimatePresence>
-            {isSpecsOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                className="overflow-hidden"
-              >
-                <div className="pt-8 pb-12">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-l border-t border-ink/10 bg-white">
-                    {specs.map((item, index) => (
-                      <div key={index} className="p-10 border-r border-b border-ink/10 flex flex-col min-h-[220px]">
-                        <span className="type-micro text-ink/30 block mb-6">
-                          {item.label}
-                        </span>
-                        <p className="type-small text-ink/70 whitespace-pre-line">
-                          {item.content}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-l border-t border-ink/10 bg-white">
+            {specs.map((item, index) => (
+              <div key={index} className="p-10 border-r border-b border-ink/10 flex flex-col min-h-[200px]">
+                <span className="type-micro text-ink/30 block mb-6">
+                  {item.label}
+                </span>
+                <p className="type-small text-ink/70 whitespace-pre-line">
+                  {item.content}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -327,40 +302,8 @@ const Philosophy = () => (
   <section id="philosophy" className="py-32 px-6 border-y border-ink/5 relative overflow-hidden bg-white/50">
     <div className="max-w-7xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-        {/* Logo treated as a manufacturer's mark / stamp */}
-        <div className="lg:col-span-5">
-          <div className="relative">
-            {/* Frame with corner ticks */}
-            <div className="relative aspect-square bg-ink p-10 md:p-14 rounded-sm shadow-2xl">
-              {/* Corner ticks for a technical-drawing feel */}
-              <span className="absolute top-3 left-3 w-4 h-px bg-paper/30" />
-              <span className="absolute top-3 left-3 w-px h-4 bg-paper/30" />
-              <span className="absolute top-3 right-3 w-4 h-px bg-paper/30" />
-              <span className="absolute top-3 right-3 w-px h-4 bg-paper/30" />
-              <span className="absolute bottom-3 left-3 w-4 h-px bg-paper/30" />
-              <span className="absolute bottom-3 left-3 w-px h-4 bg-paper/30" />
-              <span className="absolute bottom-3 right-3 w-4 h-px bg-paper/30" />
-              <span className="absolute bottom-3 right-3 w-px h-4 bg-paper/30" />
-
-              <div className="w-full h-full flex items-center justify-center">
-                <img
-                  src="/logo.png"
-                  alt="Solid State Goods"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Inscribed plate beneath the logo */}
-            <div className="mt-4 flex items-center justify-between type-micro text-ink/40">
-              <span>Solid · State · Goods</span>
-              <span>Made in USA</span>
-            </div>
-          </div>
-        </div>
-
         {/* Copy block */}
-        <div className="lg:col-span-7 lg:pl-8">
+        <div className="lg:col-span-8 lg:col-start-3">
           <div className="inline-flex items-center mb-8">
             <span className="technical-label !mb-0">About Solid State Goods</span>
           </div>
@@ -388,7 +331,7 @@ const BatchSection = () => {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [phone, setPhone] = React.useState('');
-  const [variant, setVariant] = React.useState('Silver Standard');
+  const [variant, setVariant] = React.useState('Silver Satin');
   const [quantity, setQuantity] = React.useState('1');
   const [message, setMessage] = React.useState('');
   const [submitting, setSubmitting] = React.useState(false);
@@ -459,7 +402,7 @@ const BatchSection = () => {
     setName('');
     setEmail('');
     setPhone('');
-    setVariant('Silver Standard');
+    setVariant('Silver Satin');
     setQuantity('1');
     setMessage('');
     setError(null);
@@ -510,7 +453,7 @@ const BatchSection = () => {
                     required
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
+                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors type-small"
                   />
                 </div>
                 <div className="space-y-3">
@@ -522,7 +465,7 @@ const BatchSection = () => {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     onBlur={e => validateEmail(e.target.value)}
-                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
+                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors type-small"
                   />
                   {emailError && (
                     <p className="type-small text-red-600 mt-2">{emailError}</p>
@@ -554,7 +497,7 @@ const BatchSection = () => {
                   placeholder="(555) 123-4567"
                   value={phone}
                   onChange={e => setPhone(e.target.value)}
-                  className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
+                  className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors type-small"
                 />
               </div>
 
@@ -565,9 +508,8 @@ const BatchSection = () => {
                     <select
                       value={variant}
                       onChange={e => setVariant(e.target.value)}
-                      className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors appearance-none pr-10 text-sm cursor-pointer"
+                      className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors appearance-none pr-10 type-small cursor-pointer"
                     >
-                      <option>Silver Standard</option>
                       <option>Silver Satin</option>
                       <option>Black Standard</option>
                       <option>Black Custom</option>
@@ -581,7 +523,7 @@ const BatchSection = () => {
                     type="number"
                     value={quantity}
                     onChange={e => setQuantity(e.target.value)}
-                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm"
+                    className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors type-small"
                   />
                 </div>
               </div>
@@ -593,7 +535,7 @@ const BatchSection = () => {
                   placeholder="Example: I'm interested in a bulk order for my team, or I'd like my name engraved in a serif font."
                   value={message}
                   onChange={e => setMessage(e.target.value)}
-                  className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors text-sm resize-none"
+                  className="w-full bg-paper/30 border border-ink/10 px-4 py-4 rounded-lg focus:outline-none focus:border-ink/30 transition-colors type-small resize-none"
                 />
               </div>
 
@@ -601,7 +543,7 @@ const BatchSection = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full bg-ink text-paper px-10 py-5 rounded-lg font-bold hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-3 tracking-widest text-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-ink disabled:hover:text-paper disabled:hover:scale-100"
+                  className="w-full bg-ink text-paper px-10 py-5 rounded-lg type-small font-medium hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-ink disabled:hover:text-paper disabled:hover:scale-100"
                 >
                   {submitting ? 'Submitting…' : 'Join the batch'} <ArrowRight size={18} />
                 </button>
@@ -625,7 +567,9 @@ const Footer = () => {
     <footer className="py-20 px-6 border-t border-ink/5 bg-paper/50">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
         <div className="flex flex-col">
-          <span className="font-sans font-bold text-2xl tracking-tighter uppercase leading-none mb-4">Solid State Goods</span>
+          <Link to="/" aria-label="Solid State Goods home" className="mb-4">
+            <Logo />
+          </Link>
           <span className="type-small text-muted opacity-60 block">Buy it once. Use it forever.</span>
         </div>
 
@@ -663,7 +607,7 @@ const ProductsCTA = () => (
       </p>
       <Link
         to="/#products"
-        className="inline-flex items-center gap-2 bg-ink text-paper px-8 py-4 rounded-lg font-bold hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all tracking-widest text-sm"
+        className="inline-flex items-center gap-2 bg-ink text-paper px-8 py-4 rounded-lg type-small font-medium hover:bg-muted hover:text-ink hover:scale-[1.02] transition-all"
       >
         See The Knuckle <ArrowRight size={18} />
       </Link>
