@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ArrowRight,
@@ -262,7 +262,7 @@ const Variants = () => {
   ];
 
   return (
-    <section id="products" className="pt-10 pb-32 px-6 bg-paper">
+    <section id="products" className="pt-10 pb-32 px-6 bg-paper scroll-mt-20">
       <div className="max-w-7xl mx-auto text-center mb-24">
         <h2 className="type-h1 mb-6">The Knuckle</h2>
         <p className="type-body max-w-2xl mx-auto text-muted">
@@ -320,10 +320,10 @@ const Philosophy = () => (
             <p className="type-body-lg">
               We reject the modern cycle of obsolescence, favoring materials that gain character through use while maintaining their core functional integrity for generations.
             </p>
-            <p className="type-body">
+            <p className="type-body-lg">
               Our journey began in a dusty workshop where a visionary designer and a cynical master machinist shared a single goal: to build products that never need to be replaced.
             </p>
-            <p className="type-body">
+            <p className="type-body-lg">
               Every product we produce is the result of that initial friction. We don't just design objects; we document the battle between aesthetic form and physical reality, ensuring that the final result is indestructible.
             </p>
           </div>
@@ -736,7 +736,6 @@ const PRIVACY_SECTIONS: { title: string; body: React.ReactNode }[] = [
 const PrivacyPage = () => {
   useEffect(() => {
     document.title = 'Privacy Policy — Solid State Goods';
-    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -765,9 +764,20 @@ const PrivacyPage = () => {
   );
 };
 
+// Start every page at the top, including repeat clicks on the current page.
+// Links to a section (e.g. /#products) are scrolled by the page itself.
+const ScrollToTop = () => {
+  const { key, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [key, hash]);
+  return null;
+};
+
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
