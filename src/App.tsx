@@ -157,7 +157,7 @@ const FINISHES: Finish[] = [
   },
   {
     title: "Black Standard",
-    desc: "Hard anodized matte black. Stealthy and scratch-resistant.",
+    desc: "Type II, Class 2 military-grade anodized matte black. Stealthy and scratch-resistant.",
     price: "$80",
     image: "/anodized_black.jpg",
     swatch: "#1C1C1C"
@@ -165,7 +165,7 @@ const FINISHES: Finish[] = [
   {
     title: "Black Custom",
     badge: "Most Popular For Team Sets",
-    desc: 'Laser-engrave your name, team logo, or anything you want. Image dimensions 2.625" W x 2.625" L',
+    desc: 'Type II, Class 2 military-grade anodized matte black. Laser-engrave your name, team logo, or anything you want. Image dimensions 2.625" W x 2.625" L',
     price: "$90",
     pricePrefix: "Starting at",
     image: "/anodized_black_x.jpg",
@@ -256,7 +256,7 @@ const Variants = () => {
     { label: 'CHASSIS', content: 'CNC-machined from a single, solid block of 6061-T6 Billet Aluminum.' },
     { label: 'STABILITY', content: 'Features a high-friction, non-marring grip pad that is safe for use on any surface.' },
     { label: 'ENGINEERING', content: 'Utilizes solid-state architecture, meaning there are zero moving parts and zero points of failure.' },
-    { label: 'FINISHES', content: '• Bead-Blasted (Silver Satin)\n• Anodized (Black Standard and Black Custom)' },
+    { label: 'FINISHES', content: '• Bead-Blasted (Silver Satin)\n• Black Type II, Class 2 military-grade anodized (Black Standard and Black Custom)' },
     { label: 'PORTABILITY', content: 'Enhanced by its pocket-sized footprint, which is ideal for league play and tournament travel.' },
     { label: 'MAINTENANCE', content: 'Corrosion-resistant, impervious to moisture, and built to withstand high-impact drops.' },
   ];
