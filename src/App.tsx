@@ -644,9 +644,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-ink/5 flex flex-col md:flex-row justify-between type-micro text-muted">
-        <span>© 2026 Solid State Goods. Machined in the USA.</span>
-        <Link to="/privacy" className="hover:text-ink transition-colors">Privacy Policy</Link>
+      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-ink/5 flex flex-col md:flex-row justify-between gap-3 type-small text-muted">
+        <span>© 2026 solid state goods. Machined in the USA.</span>
+        <Link to="/privacy" className="self-start underline underline-offset-4 decoration-ink/30 hover:text-ink hover:decoration-ink transition-colors">Privacy Policy</Link>
       </div>
     </footer>
   );
