@@ -6,7 +6,8 @@ import {
   ChevronDown,
   Menu,
   X,
-  Instagram
+  Instagram,
+  Facebook
 } from 'lucide-react';
 import Mailcheck from 'mailcheck';
 import { Analytics } from '@vercel/analytics/react';
@@ -585,6 +586,30 @@ const BatchSection = () => {
   );
 };
 
+// Line icon in the same style as the lucide icons (lucide has no TikTok mark).
+const TikTok = ({ size = 24 }: { size?: number }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M21 7.917v4.034a9.948 9.948 0 0 1 -5 -1.951v4.5a6.5 6.5 0 1 1 -8 -6.326v4.326a2.5 2.5 0 1 0 4 2v-11.5h4.083a6.005 6.005 0 0 0 4.917 4.917z" />
+  </svg>
+);
+
+const SOCIAL_LINKS = [
+  { label: 'Instagram', href: 'https://www.instagram.com/solidstategoods/', Icon: Instagram },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@solidstategoods', Icon: TikTok },
+  { label: 'Facebook', href: 'https://www.facebook.com/solidstategoods', Icon: Facebook },
+];
+
 const Footer = () => {
   return (
     <footer className="py-20 px-6 border-t border-ink/5 bg-paper/50">
@@ -603,15 +628,20 @@ const Footer = () => {
               Contact Us
             </a>
           </div>
-          <a
-            href="https://www.instagram.com/solidstategoods/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-ink/60 hover:text-ink transition-colors group"
-          >
-            <Instagram size={18} className="group-hover:scale-110 transition-transform" />
-            <span className="type-small">@solidstategoods</span>
-          </a>
+          <div className="flex items-center gap-5">
+            {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Solid State Goods on ${label}`}
+                className="text-ink/60 hover:text-ink transition-colors"
+              >
+                <Icon size={20} />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
       <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-ink/5 flex flex-col md:flex-row justify-between type-micro text-muted">
