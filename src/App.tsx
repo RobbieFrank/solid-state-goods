@@ -427,7 +427,7 @@ const BatchSection = () => {
 
   return (
     <section id="batch" className="py-32 px-6 bg-paper border-t border-ink/5">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="type-h1 mb-4 text-ink">Ready for yours? Join the current batch.</h2>
           <p className="type-body-lg text-ink max-w-lg mx-auto">
@@ -435,7 +435,7 @@ const BatchSection = () => {
           </p>
         </div>
 
-        <div className="bg-white p-8 md:p-12 rounded-2xl border border-ink/10 shadow-[0_0_50px_-12px_rgba(0,0,0,0.05)] relative overflow-hidden">
+        <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl border border-ink/10 shadow-[0_0_50px_-12px_rgba(0,0,0,0.05)] relative overflow-hidden">
           {submitted ? (
             <div className="text-center py-8">
               <h3 className="type-h3 mb-4">You're on the list.</h3>
