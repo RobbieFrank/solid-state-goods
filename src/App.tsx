@@ -112,7 +112,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="type-body-lg text-muted max-w-2xl lg:max-w-none mx-auto mb-12"
+          className="type-body-lg text-ink max-w-2xl lg:max-w-none mx-auto mb-12"
         >
           <span className="lg:whitespace-nowrap">Welcome to Solid State Goods. We over-engineer everyday products</span>{' '}
           <br className="hidden lg:block" />
@@ -187,7 +187,14 @@ const FinishPicker = () => {
   };
 
   return (
-    <div className="group max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden border border-ink/5 shadow-sm grid grid-cols-1 md:grid-cols-[1.15fr_1fr] mb-16">
+    <div className="max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden border border-ink/5 shadow-sm mb-16">
+      <div className="bg-ink text-paper px-6 py-3 flex items-center gap-3">
+        <span className="type-micro bg-paper text-ink px-2 py-1 rounded shrink-0">5+</span>
+        <p className="type-small">
+          <span className="font-medium">Want more than one?</span> Order 5 or more for bulk pricing.
+        </p>
+      </div>
+      <div className="group grid grid-cols-1 md:grid-cols-[1.15fr_1fr]">
       <div className="aspect-square relative overflow-hidden bg-paper/50">
         {FINISHES.map((f, i) => (
           <img
@@ -201,13 +208,6 @@ const FinishPicker = () => {
       </div>
 
       <div className="p-8 md:p-10 flex flex-col">
-        <div className="flex items-center gap-3 bg-paper/60 rounded-lg px-4 py-3 mb-8">
-          <span className="type-micro bg-ink text-paper px-2 py-1 rounded shrink-0">5+</span>
-          <p className="type-small text-ink">
-            <span className="font-medium">Want more than one?</span> Order 5 or more for bulk pricing.
-          </p>
-        </div>
-
         <span className="technical-label">Finish</span>
         <div className="grid grid-cols-1 gap-2 mb-8" role="radiogroup" aria-label="Finish">
           {FINISHES.map((f, i) => (
@@ -228,12 +228,14 @@ const FinishPicker = () => {
           ))}
         </div>
 
-        {(finish.badge || finish.comingSoon) && (
-          <span className="self-start bg-ink/[0.06] text-ink/70 type-micro px-3 py-1 rounded-full mb-3">
-            {finish.badge ?? 'Coming Soon'}
-          </span>
-        )}
-        <h3 className="type-h3 mb-3">{finish.title}</h3>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3">
+          <h3 className="type-h3">{finish.title}</h3>
+          {(finish.badge || finish.comingSoon) && (
+            <span className="bg-ink/[0.06] text-ink/70 type-micro px-3 py-1 rounded-full">
+              {finish.badge ?? 'Coming Soon'}
+            </span>
+          )}
+        </div>
         <p className="type-body text-muted mb-6 flex-grow">{finish.desc}</p>
 
         <div className="pt-6 border-t border-ink/5 flex items-center justify-between gap-4">
@@ -252,6 +254,7 @@ const FinishPicker = () => {
             <ArrowRight size={16} className="shrink-0" />
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
@@ -273,7 +276,7 @@ const Variants = () => {
     <section id="products" className="pt-10 pb-32 px-6 bg-paper scroll-mt-20">
       <div className="max-w-7xl mx-auto text-center mb-24">
         <h2 className="type-h1 mb-6">The Knuckle</h2>
-        <p className="type-body max-w-2xl mx-auto text-muted">
+        <p className="type-body-lg max-w-2xl mx-auto text-ink">
           Most cue holders are cheap, generic, and fail. We built The Knuckle because we wanted something better. It's a solid, precision-machined block of aluminum designed to be the last cue holder you'll ever need to buy.
         </p>
       </div>
@@ -427,7 +430,7 @@ const BatchSection = () => {
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="type-h1 mb-4 text-ink">Ready for yours? Join the current batch.</h2>
-          <p className="type-body-lg text-muted max-w-lg mx-auto">
+          <p className="type-body-lg text-ink max-w-lg mx-auto">
             We build in small batches. Register your interest below, and we'll reach out to confirm the details.
           </p>
         </div>
@@ -572,7 +575,7 @@ const BatchSection = () => {
                 {error && (
                   <p className="type-small text-red-600">{error}</p>
                 )}
-                <p className="type-small text-muted max-w-sm">
+                <p className="type-small text-muted">
                   No deposit required at this time. We'll verify your order details and lead time before we cut any metal.
                 </p>
                 <p className="type-small text-muted max-w-sm">
@@ -619,12 +622,12 @@ const Footer = () => {
           <Link to="/" aria-label="Solid State Goods home" className="mb-4">
             <Logo />
           </Link>
-          <span className="type-small text-muted opacity-60 block">Buy it once. Use it forever.</span>
+          <span className="type-small text-ink block">Buy it once. Use it forever.</span>
         </div>
 
         <div className="flex flex-col items-start md:items-end gap-6">
           <div className="flex flex-col items-start md:items-end gap-2">
-            <span className="type-small text-ink/40">For general inquiries or custom orders</span>
+            <span className="type-small text-ink">For general inquiries or custom orders</span>
             <a href="mailto:solidstategoods@gmail.com" className="type-h3 hover:text-muted transition-colors border-b border-ink/20 pb-1">
               Contact Us
             </a>
